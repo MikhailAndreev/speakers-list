@@ -1,17 +1,29 @@
 import React from 'react';
+import { configure } from 'mobx';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { CssBaseline, ThemeProvider } from '@material-ui/core';
+import { Settings } from 'luxon';
+
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { theme } from './styles/MuiTheme';
+import './index.scss';
+
+Settings.defaultLocale = 'ru';
+configure({ enforceActions: 'observed' });
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Router>
+                <App />
+            </Router>
+        </ThemeProvider>
+    </React.StrictMode>,
+    document.getElementById('root'),
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+if (module.hot) {
+    module.hot.accept();
+}
